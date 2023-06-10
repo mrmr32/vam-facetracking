@@ -21,6 +21,9 @@ namespace FacialTrackerVamPlugin
         private static MorphMappers morphMappers;
         private static JSONNode latestParsedJson;
 
+        private object processingLock = new object();
+        private bool isProcessing = false;
+
         public override void Init()
         {
             try
@@ -90,6 +93,11 @@ namespace FacialTrackerVamPlugin
 
         public void MsgReceiveCallback(string msg)
         {
+            lock (processingLock) {
+                if (isProcessing) return; // already processing
+                // else, now we're the ones processing
+                isProcessing = true;
+            }
 
             // Try to parse JSON
             try
@@ -108,7 +116,10 @@ namespace FacialTrackerVamPlugin
             JSONStorable js = containingAtom.GetStorableByID("geometry");
             DAZCharacterSelector dcs = js as DAZCharacterSelector;
             GenerateDAZMorphsControlUI morphUI = dcs.morphsControlUI;
-
+            
+            lock (processingLock) {
+                isProcessing = false; // done processing
+            }
         }
 
         public void startServer()
