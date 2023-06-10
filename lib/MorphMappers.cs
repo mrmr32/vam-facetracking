@@ -13,12 +13,12 @@ namespace FacialTrackerVamPlugin
         public SRanipalMorphLibrary sranipalMorphLibrary;
 
         // eventually these might be user-editable via UI controls
-        private static float factorDivisorTongueStep2 = 6;
+        private static float factorDivisorTongueStep2 = 3;
         private static float factorDivisorTongueUp = 1;
         private static float factorMultiplierMouthOpen = 1.9f;
         private static float factorMultiplierMouthFrown = 1.5f;
         private static float factorDivisorMouthPouty = 2;
-		private static float factorGlobal = 0.01f;
+		private static float factorGlobal = 1f;
 
 
         public static void JawRight()
