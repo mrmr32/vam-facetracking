@@ -159,6 +159,38 @@ namespace FacialTrackerVamPlugin
             _setMorphValue(DAZMorphLibrary.LipBottomIn, SRanipalMorphLibrary.Mouth_Upper_Inside * factorGlobal *1.4f);
         }
 
+        public static void Eye()
+        {
+            /*
+            private EyesControl _eyeBehavior;
+            _eyeBehavior = (EyesControl) containingAtom.GetStorableByID("Eyes");
+            if (_eyeBehavior == null) throw new NullReferenceException(nameof(_eyeBehavior));
+
+            _glanceEyeTarget = new GameObject("GlanceEyeTarget").transform;
+            _eyeBehavior.currentLookMode = EyesControl.LookMode.Custom;
+            _eyeBehavior.lookAt1.target = _glanceEyeTarget;
+            _eyeBehavior.lookAt2.target = _glanceEyeTarget;
+            */
+        }
+
+        public static void Blink()
+        {
+            _setMorphValue(DAZMorphLibrary.EyeBlink_L, SRanipalMorphLibrary.Eye_Blink_Left * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.EyeBlink_R, SRanipalMorphLibrary.Eye_Blink_Right * factorGlobal);
+            
+            _setMorphValue(DAZMorphLibrary.EyeSquint_L, SRanipalMorphLibrary.Eye_Squint_Left * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.EyeSquint_R, SRanipalMorphLibrary.Eye_Squint_Right * factorGlobal);
+        }
+
+        public static void Brow()
+        {
+            _setMorphValue(DAZMorphLibrary.BrowDown_L, SRanipalMorphLibrary.Brow_Down_Left * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.BrowDown_R, SRanipalMorphLibrary.Brow_Down_Right * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.BrowInnerUp, SRanipalMorphLibrary.Brow_Inner_Up * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.BrowOuterUp_L, SRanipalMorphLibrary.Brow_Outer_Up_Left * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.BrowOuterUp_R, SRanipalMorphLibrary.Brow_Outer_Up_Right * factorGlobal);
+        }
+
         // Class constructor
         public MorphMappers(Atom containingAtom, float defaultMorphValue, Boolean ignoreMissingMorphs)
         {
@@ -170,7 +202,7 @@ namespace FacialTrackerVamPlugin
         public void _runAll(JSONNode newSranipalMorphValues = null)
         {
             // If new SRanipal morph values were passed, update morph library
-            if (newSranipalMorphValues != null) sranipalMorphLibrary._updateFromJsonNode(newSranipalMorphValues);
+            if (newSranipalMorphValues != null) sranipalMorphLibrary._updateFromJsonNode(newSranipalMorphValues.AsObject);
 
             // Call mapper functions
             JawRight();
@@ -191,6 +223,9 @@ namespace FacialTrackerVamPlugin
 			JawDown();
 			LipTopDown();
 			LipBottomIn();
+            Eye();
+            Blink();
+            Brow();
 
             // ... any new mapper functions should be called here
 

@@ -46,18 +46,29 @@ namespace FacialTrackerVamPlugin
         public static float Tongue_UpLeft_Morph = 0;
         public static float Tongue_DownRight_Morph = 0;
         public static float Tongue_DownLeft_Morph = 0;
+        public static float Eye_X_Left = 0;
+        public static float Eye_Y_Left = 0;
+        public static float Eye_X_Right = 0;
+        public static float Eye_Y_Right = 0;
+        public static float Eye_Blink_Left = 0;
+        public static float Eye_Blink_Right = 0;
+        public static float Eye_Squint_Left = 0;
+        public static float Eye_Squint_Right = 0;
+        public static float Brow_Down_Left = 0;
+        public static float Brow_Down_Right = 0;
+        public static float Brow_Inner_Up = 0;
+        public static float Brow_Outer_Up_Left = 0;
+        public static float Brow_Outer_Up_Right = 0;
 
         public SRanipalMorphLibrary()
         {
 
         }
 
-        public void _updateFromJsonNode(JSONNode sranipalValues)
+        public void _updateFromJsonNode(JSONClass sranipalValues)
         {
-
             try
             {
-
                 float.TryParse(sranipalValues["Jaw_Right"], out Jaw_Right);
                 float.TryParse(sranipalValues["Jaw_Left"], out Jaw_Left);
                 float.TryParse(sranipalValues["Jaw_Forward"], out Jaw_Forward);
@@ -95,16 +106,26 @@ namespace FacialTrackerVamPlugin
                 float.TryParse(sranipalValues["Tongue_UpLeft_Morph"], out Tongue_UpLeft_Morph); // NOT CURRENTLY USED
                 float.TryParse(sranipalValues["Tongue_DownRight_Morph"], out Tongue_DownRight_Morph); // NOT CURRENTLY USED
                 float.TryParse(sranipalValues["Tongue_DownLeft_Morph"], out Tongue_DownLeft_Morph); // NOT CURRENTLY USED
-
+                if (sranipalValues.HasKey("Eye_X_Left")) float.TryParse(sranipalValues["Eye_X_Left"], out Eye_X_Left);
+                if (sranipalValues.HasKey("Eye_Y_Left")) float.TryParse(sranipalValues["Eye_Y_Left"], out Eye_Y_Left);
+                if (sranipalValues.HasKey("Eye_X_Right")) float.TryParse(sranipalValues["Eye_X_Right"], out Eye_X_Right);
+                if (sranipalValues.HasKey("Eye_Y_Right")) float.TryParse(sranipalValues["Eye_Y_Right"], out Eye_Y_Right);
+                if (sranipalValues.HasKey("Eye_Blink_Left")) float.TryParse(sranipalValues["Eye_Blink_Left"], out Eye_Blink_Left);
+                if (sranipalValues.HasKey("Eye_Blink_Right")) float.TryParse(sranipalValues["Eye_Blink_Right"], out Eye_Blink_Right);
+                if (sranipalValues.HasKey("Eye_Squint_Left")) float.TryParse(sranipalValues["Eye_Squint_Left"], out Eye_Squint_Left);
+                if (sranipalValues.HasKey("Eye_Squint_Right")) float.TryParse(sranipalValues["Eye_Squint_Right"], out Eye_Squint_Right);
+                if (sranipalValues.HasKey("Brow_Down_Left")) float.TryParse(sranipalValues["Brow_Down_Left"], out Brow_Down_Left);
+                if (sranipalValues.HasKey("Brow_Down_Right")) float.TryParse(sranipalValues["Brow_Down_Right"], out Brow_Down_Right);
+                if (sranipalValues.HasKey("Brow_Inner_Up")) float.TryParse(sranipalValues["Brow_Inner_Up"], out Brow_Inner_Up);
+                if (sranipalValues.HasKey("Brow_Outer_Up_Left")) float.TryParse(sranipalValues["Brow_Outer_Up_Left"], out Brow_Outer_Up_Left);
+                if (sranipalValues.HasKey("Brow_Outer_Up_Right")) float.TryParse(sranipalValues["Brow_Outer_Up_Right"], out Brow_Outer_Up_Right);
             }
             catch (Exception e)
             {
                 SuperController.LogError($"Unable to retrieve SRanipal morph values from JSON message");
                 throw e;
             }
-
         }
-
     }
 
 }
