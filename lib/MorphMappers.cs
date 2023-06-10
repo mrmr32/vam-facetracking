@@ -13,76 +13,78 @@ namespace FacialTrackerVamPlugin
         public SRanipalMorphLibrary sranipalMorphLibrary;
 
         // eventually these might be user-editable via UI controls
-        private static float factorDivisorTongueStep2 = 3;
-        private static float factorDivisorTongueUp = 2;
-        private static float factorMultiplierMouthOpen = 1.2f;
+        private static float factorDivisorTongueStep2 = 6;
+        private static float factorDivisorTongueUp = 1;
+        private static float factorMultiplierMouthOpen = 1.9f;
         private static float factorMultiplierMouthFrown = 1.5f;
         private static float factorDivisorMouthPouty = 2;
+		private static float factorGlobal = 0.01f;
+
 
         public static void JawRight()
         {
-            _setMorphValue(DAZMorphLibrary.JawRight, SRanipalMorphLibrary.Jaw_Right);
+            _setMorphValue(DAZMorphLibrary.JawRight, SRanipalMorphLibrary.Jaw_Right * factorGlobal * 2);
         }
 
         public static void JawLeft()
         {
-            _setMorphValue(DAZMorphLibrary.JawLeft, SRanipalMorphLibrary.Jaw_Left);
+            _setMorphValue(DAZMorphLibrary.JawLeft, SRanipalMorphLibrary.Jaw_Left * factorGlobal * 2);
         }
 
         public static void JawForward()
         {
-            _setMorphValue(DAZMorphLibrary.JawForward, SRanipalMorphLibrary.Jaw_Forward);
+            _setMorphValue(DAZMorphLibrary.JawForward, SRanipalMorphLibrary.Jaw_Forward * factorGlobal * 100);
         }
 
         public static void MouthOpen()
         {
-            _setMorphValue(DAZMorphLibrary.MouthOpenWide, SRanipalMorphLibrary.Jaw_Open * factorMultiplierMouthOpen);
+            _setMorphValue(DAZMorphLibrary.MouthOpenWide, SRanipalMorphLibrary.Jaw_Open * factorMultiplierMouthOpen * factorGlobal);
         }
 
         public static void LipUpperUpRight()
         {
-            _setMorphValue(DAZMorphLibrary.LipUpperUp_R, SRanipalMorphLibrary.Mouth_Upper_UpRight);
+            _setMorphValue(DAZMorphLibrary.LipUpperUp_R, SRanipalMorphLibrary.Mouth_Upper_UpRight * factorGlobal * 1);
         }
 
         public static void LipUpperUpLeft()
         {
-            _setMorphValue(DAZMorphLibrary.LipUpperUp_L, SRanipalMorphLibrary.Mouth_Upper_UpLeft);
+            _setMorphValue(DAZMorphLibrary.LipUpperUp_L, SRanipalMorphLibrary.Mouth_Upper_UpLeft * factorGlobal * 1);
         }
 
         public static void LipLowerDownRight()
         {
-            _setMorphValue(DAZMorphLibrary.LipLowerDown_R, SRanipalMorphLibrary.Mouth_Lower_DownRight);
+            _setMorphValue(DAZMorphLibrary.LipLowerDown_R, SRanipalMorphLibrary.Mouth_Lower_DownRight * factorGlobal * 0.7f);
         }
 
         public static void LipLowerDownLeft()
         {
-            _setMorphValue(DAZMorphLibrary.LipLowerDown_L, SRanipalMorphLibrary.Mouth_Lower_DownLeft);
+            _setMorphValue(DAZMorphLibrary.LipLowerDown_L, SRanipalMorphLibrary.Mouth_Lower_DownLeft * factorGlobal * 0.7f);
         }
 
         public static void MouthPout()
         {
-            _setMorphValue(DAZMorphLibrary.LipsPucker, SRanipalMorphLibrary.Mouth_Pout);
-            _setMorphValue(DAZMorphLibrary.MouthPouty, SRanipalMorphLibrary.Mouth_Pout / factorDivisorMouthPouty);
+            _setMorphValue(DAZMorphLibrary.LipsPucker, SRanipalMorphLibrary.Mouth_Pout * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.MouthPouty, SRanipalMorphLibrary.Mouth_Pout / factorDivisorMouthPouty * factorGlobal);
         }
 
         public static void MouthSmileRight()
         {
-            _setMorphValue(DAZMorphLibrary.MouthSmile_R, SRanipalMorphLibrary.Mouth_Smile_Right);
+            _setMorphValue(DAZMorphLibrary.MouthSmile_R, SRanipalMorphLibrary.Mouth_Smile_Right * factorGlobal * 1.2f);
         }
 
         public static void MouthSmileLeft()
         {
-            _setMorphValue(DAZMorphLibrary.MouthSmile_L, SRanipalMorphLibrary.Mouth_Smile_Left);
+            _setMorphValue(DAZMorphLibrary.MouthSmile_L, SRanipalMorphLibrary.Mouth_Smile_Left * factorGlobal * 1.2f);
         }
 
         public static void MouthFrownRight()
         {
-            _setMorphValue(DAZMorphLibrary.MouthFrown_R, SRanipalMorphLibrary.Mouth_Sad_Right * factorMultiplierMouthFrown);
+            _setMorphValue(DAZMorphLibrary.MouthFrown_R, SRanipalMorphLibrary.Mouth_Sad_Right * factorMultiplierMouthFrown * factorGlobal);
         }
 
         public static void MouthFrownLeft()
         {
-            _setMorphValue(DAZMorphLibrary.MouthFrown_L, SRanipalMorphLibrary.Mouth_Sad_Left * factorMultiplierMouthFrown);
+            _setMorphValue(DAZMorphLibrary.MouthFrown_L, SRanipalMorphLibrary.Mouth_Sad_Left * factorMultiplierMouthFrown * factorGlobal);
         }
 
         public static void CheekPuffSuck()
@@ -101,8 +103,8 @@ namespace FacialTrackerVamPlugin
                 vLeft = 0 - SRanipalMorphLibrary.Cheek_Puff_Left;
             }
 
-            _setMorphValue(DAZMorphLibrary.CheekSuckRight, vRight);
-            _setMorphValue(DAZMorphLibrary.CheekSuckLeft, vLeft);
+            _setMorphValue(DAZMorphLibrary.CheekSuckRight, vRight * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.CheekSuckLeft, vLeft * factorGlobal);
         }
 
         public static void Tongue()
@@ -133,12 +135,28 @@ namespace FacialTrackerVamPlugin
                 vSideSide = 0 - SRanipalMorphLibrary.Tongue_Left;
             }
 
-            _setMorphValue(DAZMorphLibrary.TongueInOut, vInOut);
-            _setMorphValue(DAZMorphLibrary.TongueLength, vLength);
-            _setMorphValue(DAZMorphLibrary.TongueRaiseLower, vRaiseLower);
-            _setMorphValue(DAZMorphLibrary.TongueRoll2, vRoll);
-            _setMorphValue(DAZMorphLibrary.TongueSideSide, vSideSide);
+            _setMorphValue(DAZMorphLibrary.TongueInOut, vInOut * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.TongueLength, vLength * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.TongueRaiseLower, 0.3f+vRaiseLower * factorGlobal);
+            _setMorphValue(DAZMorphLibrary.TongueRoll2, vRoll * factorGlobal * 2.5f);
+            _setMorphValue(DAZMorphLibrary.TongueSideSide, vSideSide * factorGlobal);
 
+        }
+
+		//added
+		public static void JawDown()
+        {
+            _setMorphValue(DAZMorphLibrary.JawChew, SRanipalMorphLibrary.Mouth_Ape_Shape * factorGlobal *1.4f);
+        }
+
+		public static void LipTopDown()
+        {
+            _setMorphValue(DAZMorphLibrary.LipTopDown, SRanipalMorphLibrary.Mouth_Lower_Inside * factorGlobal *1.4f);
+        }
+		
+		public static void LipBottomIn()
+        {
+            _setMorphValue(DAZMorphLibrary.LipBottomIn, SRanipalMorphLibrary.Mouth_Upper_Inside * factorGlobal *1.4f);
         }
 
         // Class constructor
@@ -169,6 +187,10 @@ namespace FacialTrackerVamPlugin
             MouthFrownLeft();
             CheekPuffSuck();
             Tongue();
+			//added
+			JawDown();
+			LipTopDown();
+			LipBottomIn();
 
             // ... any new mapper functions should be called here
 
