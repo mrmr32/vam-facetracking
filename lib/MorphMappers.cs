@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SimpleJSON;
+using UnityEngine;
+using System.Collections;
 
 namespace FacialTrackerVamPlugin
 {
@@ -19,6 +21,11 @@ namespace FacialTrackerVamPlugin
         private static float factorMultiplierMouthFrown = 1.5f;
         private static float factorDivisorMouthPouty = 2;
 		private static float factorGlobal = 1f;
+
+        private MVRScript script;
+
+        private FreeControllerV3 _eyeTarget;
+        private MotionAnimationControl _head;
 
 
         public static void JawRight()
@@ -159,18 +166,28 @@ namespace FacialTrackerVamPlugin
             _setMorphValue(DAZMorphLibrary.LipBottomIn, SRanipalMorphLibrary.Mouth_Upper_Inside * factorGlobal *1.4f);
         }
 
-        public static void Eye()
+        // TODO as we're looking at a static position we should update this function every time the `containingAtom` moves
+        public void Eye()
         {
-            /*
-            private EyesControl _eyeBehavior;
-            _eyeBehavior = (EyesControl) containingAtom.GetStorableByID("Eyes");
-            if (_eyeBehavior == null) throw new NullReferenceException(nameof(_eyeBehavior));
+            float ySeePlane = 0.5f;
+            Vector3 seeVector = new Vector3(SRanipalMorphLibrary.Eye_X_Right, SRanipalMorphLibrary.Eye_Y_Right, ySeePlane);
+            /*if (Mathf.Abs(SRanipalMorphLibrary.Eye_X_Right) < 0.05f && Mathf.Abs(SRanipalMorphLibrary.Eye_Y_Right) < 0.05f &&
+                    (Mathf.Abs(SRanipalMorphLibrary.Eye_X_Left) > 0.05f || Mathf.Abs(SRanipalMorphLibrary.Eye_Y_Left) > 0.05f)) {
+                // wink with the right eye
+                seeVector = new Vector3(-SRanipalMorphLibrary.Eye_X_Left, SRanipalMorphLibrary.Eye_Y_Left, ySeePlane); // the left eye needs to be mirrored
+            }*/
+            
+            _eyeTarget.control.position = this._head.transform.position + this._head.transform.rotation * seeVector;
+        }
+        
+        // @see https://github.com/mrmr32/TriggerIncrementer/blob/main/TriggerIncrementer.cs#L175
+        private MotionAnimationControl GetHead() {
+            foreach (MotionAnimationControl mac in this.script.containingAtom.motionAnimationControls) { // TODO get head inside linkableRigidbodies?
+                if (!mac.name.Equals("headControl")) continue;
+                return mac;
+            }
 
-            _glanceEyeTarget = new GameObject("GlanceEyeTarget").transform;
-            _eyeBehavior.currentLookMode = EyesControl.LookMode.Custom;
-            _eyeBehavior.lookAt1.target = _glanceEyeTarget;
-            _eyeBehavior.lookAt2.target = _glanceEyeTarget;
-            */
+            return null; // not found
         }
 
         public static void Blink()
@@ -192,10 +209,16 @@ namespace FacialTrackerVamPlugin
         }
 
         // Class constructor
-        public MorphMappers(Atom containingAtom, float defaultMorphValue, Boolean ignoreMissingMorphs)
+        public MorphMappers(Atom containingAtom, MVRScript script, float defaultMorphValue, Boolean ignoreMissingMorphs)
         {
+            this.script = script;
+
             dazMorphLibrary = new DAZMorphLibrary(containingAtom, defaultMorphValue, ignoreMissingMorphs);
             sranipalMorphLibrary = new SRanipalMorphLibrary();
+
+            _eyeTarget = containingAtom.freeControllers.FirstOrDefault(fc => fc.name == "eyeTargetControl");
+            if (_eyeTarget == null) throw new NullReferenceException(nameof(_eyeTarget));
+            if ((this._head = GetHead()) == null) throw new InvalidOperationException("Head not found in added object");
         }
 
         // Function to run all mappers at once

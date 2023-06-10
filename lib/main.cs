@@ -33,7 +33,7 @@ namespace FacialTrackerVamPlugin
                 if (containingAtom.type != "Person") throw new System.Exception("Plugin must be attached to a Person atom");
 
                 // Set up MorphMappers class, which will take care of building morph libraries for us
-                morphMappers = new MorphMappers(containingAtom, DEFAULT_MORPH_VALUE, IGNORE_MISSING_MORPHS);
+                morphMappers = new MorphMappers(containingAtom, this, DEFAULT_MORPH_VALUE, IGNORE_MISSING_MORPHS);
 
                 // Set up UDP server socket so we can listen for messages
                 startServer();
