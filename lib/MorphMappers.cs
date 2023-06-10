@@ -200,7 +200,10 @@ namespace FacialTrackerVamPlugin
         // If a morph wasn't found, we won't try to update it. Required because Male person atoms may lack Female morphs. 
         private static void _setMorphValue(DAZMorph morph, float value)
         {
-            if (morph != null) morph.SetValue(value);
+            if (morph != null) {
+                morph.SetValue(value);
+                morph.SyncJSON();
+            }
         }
 
     }
