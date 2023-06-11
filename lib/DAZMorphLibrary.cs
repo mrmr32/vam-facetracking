@@ -31,6 +31,15 @@ namespace FacialTrackerVamPlugin
         public static DAZMorph JawChew;
 		public static DAZMorph LipTopDown;
 		public static DAZMorph LipBottomIn;
+		public static DAZMorph EyeBlink_R;
+		public static DAZMorph EyeBlink_L;
+        public static DAZMorph EyeSquint_R;
+        public static DAZMorph EyeSquint_L;
+        public static DAZMorph BrowDown_L;
+        public static DAZMorph BrowDown_R;
+        public static DAZMorph BrowInnerUp;
+        public static DAZMorph BrowOuterUp_L;
+        public static DAZMorph BrowOuterUp_R;
 		
 		
         public static DAZMorph TongueSideSide;		
@@ -133,13 +142,50 @@ namespace FacialTrackerVamPlugin
 				JawChew = _initMorph(
                     "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/JawChew.vmi",
                     "JawChew"
-				);	
+				);
 				
 				LipTopDown = _initMorph("Lip Top Down");
 				
 				LipBottomIn = _initMorph("Lip Bottom In");
-								
-					
+				
+				EyeBlink_R = _initMorph("Eyes Closed Right");
+
+                EyeBlink_L = _initMorph("Eyes Closed Left");
+
+                EyeSquint_R = _initMorph(
+                    "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/EyeSquint_R.vmi",
+                    "EyeSquint_R"
+				);
+                
+                EyeSquint_L = _initMorph(
+                    "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/EyeSquint_L.vmi",
+                    "EyeSquint_L"
+				);
+
+                BrowDown_L = _initMorph(
+                    "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/BrowD_L.vmi",
+                    "EyeSquint_L"
+				);
+
+                BrowDown_R = _initMorph(
+                    "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/BrowD_R.vmi",
+                    "EyeSquint_L"
+				);
+
+                BrowInnerUp = _initMorph(
+                    "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/BrowU_C.vmi",
+                    "EyeSquint_L"
+				);
+
+                BrowOuterUp_L = _initMorph(
+                    "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/BrowU_L.vmi",
+                    "EyeSquint_L"
+				);
+
+                BrowOuterUp_R = _initMorph(
+                    "Jackaroo.JarModularExpressions.2:/Custom/Atom/Person/Morphs/female/Jackaroo/JaRExpressions1.2/BrowU_R.vmi",
+                    "EyeSquint_L"
+				);
             }
             catch (Exception e)
             {
