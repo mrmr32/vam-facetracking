@@ -24,7 +24,9 @@ namespace FacialTrackerVamPlugin
 
         private MVRScript script;
 
+        private EyesControl _eyeBehavior;
         private FreeControllerV3 _eyeTarget;
+        private DAZMeshEyelidControl _eyelidBehavior;
         private MotionAnimationControl _head;
 
 
@@ -216,8 +218,20 @@ namespace FacialTrackerVamPlugin
             dazMorphLibrary = new DAZMorphLibrary(containingAtom, defaultMorphValue, ignoreMissingMorphs);
             sranipalMorphLibrary = new SRanipalMorphLibrary();
 
+            // @ref https://github.com/acidbubbles/vam-glance/blob/master/Glance.cs
             _eyeTarget = containingAtom.freeControllers.FirstOrDefault(fc => fc.name == "eyeTargetControl");
             if (_eyeTarget == null) throw new NullReferenceException(nameof(_eyeTarget));
+            _eyeBehavior = (EyesControl) containingAtom.GetStorableByID("Eyes");
+            if (_eyeBehavior == null) throw new NullReferenceException(nameof(_eyeBehavior));
+            _eyelidBehavior = (DAZMeshEyelidControl) containingAtom.GetStorableByID("EyelidControl");
+            if (_eyelidBehavior == null) throw new NullReferenceException(nameof(_eyelidBehavior));
+
+            // TODO this should be re-runed every time the atom changes
+            _eyeTarget.hidden = true;
+            _eyeBehavior.currentLookMode = EyesControl.LookMode.Target;
+            // TODO add a property for the people that are not using an eyetracking device?
+            _eyelidBehavior.SetBoolParamValue("blinkEnabled", false); // I'm the one who blinks
+
             if ((this._head = GetHead()) == null) throw new InvalidOperationException("Head not found in added object");
         }
 
